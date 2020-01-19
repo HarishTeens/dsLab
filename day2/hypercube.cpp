@@ -27,10 +27,25 @@ vector<vector<int> > makeIdentityMatrix(int deg){
 
 void makeHypercube(int deg)
 {
-	makeIdentityMatrix(deg);
+	
 	for(int i=1;i<=deg;++i){
+		vector<vector<int> > id=makeIdentityMatrix(deg-1);
+		int s=pow(2,i);
+		int matrix[s][s];
 
-		int matrix[pow(2,i)][pow(2,i)];
+		for(int i=0;i<s/2;++i){
+			for(int j=0;j<s/2;++j){
+				matrix[i][j]=matrix[s/2+i][s/2+j]=
+			}
+		}
+		for(int i=0;i<s/2;++i){
+			for(int j=s/2;j<s;++j){
+				matrix[i][j]=matrix[s/2+i][s/2-j]=id[]
+			}
+		}
+
+
+
 
 	}
 }
