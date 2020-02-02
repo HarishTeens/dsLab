@@ -1,6 +1,6 @@
 #include <bits/stdc++.h> 
 using namespace std; 
-# define INF 9999
+# define $ 9999
 # define N 10
 
   
@@ -10,16 +10,20 @@ void addEdge(int adj[N][N], int u, int v)
 } 
 
 
-void printMatrix(int adj1[N][N]){    
+void printMatrix(int adj1[N][N]){
+    cout<<"  - ";
+    for(int i=0;i<N;++i)
+        cout<<i<<"     ";  
+    cout<<endl;
 	for(int i=0;i<N;++i){
         int deg=0;
         cout<<i<<" - ";
         for(int j=0;j<N;++j){
-            if (adj1[i][j] == INF)  
-                cout<<"INF"<<" ("<<j<<") ";  
+            if (adj1[i][j] == $)  
+                cout<<"$"<<"     ";  
             else
-                cout<<adj1[i][j]<<" ("<<j<<") ";
-            if(adj1[i][j]!=INF)
+                cout<<adj1[i][j]<<"     ";  
+            if(adj1[i][j]!=$)
                 deg+=adj1[i][j];
         }
         cout<<"(deg="<<deg<<")";
@@ -33,7 +37,7 @@ void makeTopology(int adj[N][N])
         int deg=rand()%2+2;
         while(deg){
             int node=rand()%10;
-            if(node!=i&&adj[i][node]==INF){            
+            if(node!=i&&adj[i][node]==$){            
                 addEdge(adj,i,node);
                 --deg;
             }
@@ -45,16 +49,19 @@ void printSolution(int dist[][N])
 {  
     cout<<"The following matrix shows the shortest distances"
             " between every pair of Vertices \n";  
-    
+    cout<<"  - ";
+    for(int i=0;i<N;++i)
+        cout<<i<<"     ";  
+    cout<<endl;
     for (int i = 0; i < N; i++)  
     {  
         cout<<i<<" - ";
         for (int j = 0; j < N; j++)  
         {  
-             if (dist[i][j] == INF)  
-                cout<<"INF"<<" ("<<j<<") ";
+             if (dist[i][j] == $)  
+                cout<<"$"<<"     ";  
             else
-                cout<<dist[i][j]<<" ("<<j<<") ";  
+                cout<<dist[i][j]<<"     ";  
         }  
         cout<<endl;  
     }  
@@ -116,13 +123,15 @@ int main()
     //initialising matrix with 0
     for(int i=0;i<N;++i)
         for(int j=0;j<N;++j)
-            adj1[i][j]=INF;
+            adj1[i][j]=$;
     // printMatrix(adj1);
     makeTopology(adj1);
 
     printMatrix(adj1);
 
     floydWarshall(adj1);
+
+    cout<<"The following graph is connected";
     
 
 }
