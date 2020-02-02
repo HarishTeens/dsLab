@@ -10,15 +10,15 @@ void addEdge(int adj[N][N], int u, int v)
 } 
 
 
-void printMatrix(int adj1[N][N]){
+void printMatrix(int adj1[N][N]){    
 	for(int i=0;i<N;++i){
         int deg=0;
         cout<<i<<" - ";
         for(int j=0;j<N;++j){
             if (adj1[i][j] == INF)  
-                cout<<"INF"<<"     ";  
+                cout<<"INF"<<" ("<<j<<") ";  
             else
-                cout<<adj1[i][j]<<"     ";  
+                cout<<adj1[i][j]<<" ("<<j<<") ";
             if(adj1[i][j]!=INF)
                 deg+=adj1[i][j];
         }
@@ -45,14 +45,16 @@ void printSolution(int dist[][N])
 {  
     cout<<"The following matrix shows the shortest distances"
             " between every pair of Vertices \n";  
+    
     for (int i = 0; i < N; i++)  
     {  
+        cout<<i<<" - ";
         for (int j = 0; j < N; j++)  
         {  
              if (dist[i][j] == INF)  
-                cout<<"INF"<<"     ";  
+                cout<<"INF"<<" ("<<j<<") ";
             else
-                cout<<dist[i][j]<<"     ";  
+                cout<<dist[i][j]<<" ("<<j<<") ";  
         }  
         cout<<endl;  
     }  
