@@ -1,4 +1,3 @@
-
 // Client side C/C++ program to demonstrate Socket programming 
 #include<time.h>
 #include <stdio.h> 
@@ -7,6 +6,7 @@
 #include <arpa/inet.h> 
 #include <unistd.h> 
 #include <string.h> 
+#include<stdbool.h>
 #define PORT 8080 
 
 
@@ -132,16 +132,26 @@ int main(int argc, char const *argv[])
     char snum[20];
     time_t t;
     t=time(NULL);
-    itoa(t, snum, 10);
+    itoa(t, snum, 10);    
     //req to gen a random number
     send(sock , snum , strlen(snum) , 0 ); 
     //read the random number    
     valread = read( sock , buffer, 1024); 
     int rnd=atoi(buffer);
+    printf("DO you want to display the number sent by the server?\n");
+    int ch;
+    scanf("%d",&ch);
+    if(ch==1){
+        printf("the number sent by server is %d\n",rnd);
+    }    
     int primeNumbers=printPrime(rnd);
     printf("\n");
     
-   
+    t=time(NULL);
+    itoa(t, snum, 10);
+    //acknowledgement timestamp
+    printf("The acknowledgement Time from  %s\n", snum);
+    send(sock , snum , strlen(snum) , 0 ); 
     
     // convert 123 to string [buf]
     itoa(primeNumbers, snum, 10);
