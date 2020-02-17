@@ -121,22 +121,35 @@ int main(int argc, char const *argv[])
         exit(EXIT_FAILURE); 
     } 
 
-    time_t req;
+    time_t rep,req;
+    int cnt,temp;
     
 
     valread = read( new_socket , buffer, 1024);
+    cnt=atoi(buffer);
+    printf("The Request Time from client is  %d\n",cnt);
     req=time(NULL);
     //generate random number 
     int rnd=rand()%10+30;
     printf("The random number generated is %d \n",rnd );
-    char snum[5];
+    char snum[20];
 
     // convert 123 to string [buf]
     itoa(rnd, snum, 10);
+
+    //reply time stamp    
     send(new_socket, snum , strlen(snum) , 0 ); 
+    rep=time(NULL);    
+    printf("The Reply Time from server is  %d\n",rep);
+    //read the acknowledgement timestamp
+    valread = read( new_socket , buffer, 1024); 
+    cnt=atoi(buffer);
     //read the number of prime numbers
     valread = read( new_socket , buffer, 1024); 
-    int cnt=atoi(buffer);
-    printf("Number of random numbers are %d\n",cnt);
+    temp=atoi(buffer);
+    printf("The acknowledgement time from client is %d\n",cnt);
+
+    
+    printf("Number of random numbers are %d\n",temp);
     return 0; 
 } 

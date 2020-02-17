@@ -128,18 +128,29 @@ int main(int argc, char const *argv[])
         printf("\nConnection Failed \n"); 
         return -1; 
     } 
+
+    char snum[20];
+    time_t t;
+    t=time(NULL);
+    itoa(t, snum, 10);
     //req to gen a random number
-    send(sock , hello , strlen(hello) , 0 );   
+    send(sock , snum , strlen(snum) , 0 ); 
     //read the random number    
     valread = read( sock , buffer, 1024); 
     int rnd=atoi(buffer);
     int primeNumbers=printPrime(rnd);
     printf("\n");
-    char snum[5];
-
+    
+    t=time(NULL);
+    itoa(t, snum, 10);
+    //acknowledgement timestamp
+    send(sock , snum , strlen(snum) , 0 ); 
+    
     // convert 123 to string [buf]
     itoa(primeNumbers, snum, 10);
-    send(sock , snum , strlen(snum) , 0 ); 
+    printf("random numbers is %s\n",snum );
+    send(sock , snum , strlen(snum) , 0 );
+
 
     
     return 0; 
