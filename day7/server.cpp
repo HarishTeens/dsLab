@@ -103,14 +103,7 @@ int printPrime(int n)
     return cnt;
 } 
 
-int manageFault(queue<pair<int,int> > q,int x){
-    int ret=readFile(x);
-    if(q.size()==5){
-        q.pop();        
-    }
-    q.push(make_pair(x,ret));
-    return ret;
-}
+
 
 int readFile(int x){
     int ret;
@@ -126,7 +119,7 @@ int readFile(int x){
             {
                 //use line or in a function return it
                 //in case of a return first close the file with "fclose(file);"
-                printf("%s\n",line );
+     
                 ret=atoi(line);
                 break;
             }
@@ -145,22 +138,51 @@ int readFile(int x){
     return ret;
 }
 
-int checkHit(queue<pair<int,int> > fcfs,int x){
-    bool flag=false;
-    int ret;
-    queue<pair<int,int> > g =fcfs; 
+
+int checkHit(queue<pair<int,int> > g,int x){
+
+    int ret=-1;
+
+ 
     while (!g.empty()) 
     { 
         if(g.front().first==x){
-            flag=true;
-            ret=g.front().second();
+          
+            ret=g.front().second;
             break;
         }
         g.pop(); 
     }     
-    return !flag?-1:ret;
+    return ret;
 }
 
+int manageFault(queue<pair<int,int> > &q,int x){
+    int ret=readFile(x);
+    if(q.size()==5){
+        q.pop();        
+    }
+    q.push(make_pair(x,ret));
+    
+    return ret;
+}
+
+void pushbackHit(queue<pair<int,int> > &q,int x){
+    queue<pair<int,int> > temp;
+    pair<int,int> pp;
+    while(!q.empty()){
+        if(q.front().first!=x){
+            temp.push(q.front());
+        }else{
+            pp=q.front();
+        }
+        q.pop();
+    }
+    while(!temp.empty()){
+        q.push(temp.front());
+        temp.pop();
+    }
+    q.push(pp);
+}
    
 int main(int argc, char const *argv[]) 
 {     
@@ -216,10 +238,12 @@ int main(int argc, char const *argv[])
         valread = read( new_socket , buffer, 1024); 
         int rnd=atoi(buffer);
         int output=checkHit(fcfs,rnd);
+        
         if(output==-1){
             output=manageFault(fcfs,rnd);
+        }else{
+            pushbackHit(fcfs,rnd);
         }
-        
 
         itoa(output, snum, 10);
         send(new_socket , snum , strlen(snum) , 0 );     
