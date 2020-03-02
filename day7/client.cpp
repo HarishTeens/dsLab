@@ -105,24 +105,29 @@ int main(int argc, char const *argv[])
     } 
     srand(time(0));
     char snum[10];
-    time_t t1,t2,lat=0;    
+    clock_t t1,t2;
+    double lat=0;    
     int i;
+    t1=clock();
     for(i=0;i<100;++i){
-        int rnd=rand()%100+1;
+        int rnd=rand()%9+1;
         printf("The random number generated is %d \n",rnd );
         
         // convert 123 to string [buf]
         itoa(rnd, snum, 10);
         //send the random number
-        t1=time(NULL);
+        
         send(sock , snum , strlen(snum) , 0 ); 
         
         valread = read( sock , buffer, 1024); 
-        t2=time(NULL);
+        
         rnd=atoi(buffer);
         printf("The output is %d \n",rnd );
-        lat+=(t2-t1);
+        
     }
-    printf("The total latency is %ld \n",lat );
+
+    t2=clock();
+    lat= ((double) (t2-t1)) / CLOCKS_PER_SEC;
+    printf("The total latency is %f \n",lat );
     return 0; 
 } 
